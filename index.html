@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #b {
+      position: relative;
+      float: left;
+      margin-top: 100px;
+      margin-left: 300px;
+      width: 400px;
+      height: 400px;
+      background-color: red;
+    }
+
+    #c {
+      display: flex;
+      padding-left: 100px;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #d {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 200px;
+      height: 200px;
+      background: url(./aasad.jpg) no-repeat;
+      background-position:0 0;
+      background-size: 400px 400px;
+      z-index: 360;
+      cursor: move;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="b">
+    <div id="d"></div>
+  </div>
+</body>
+<script>
+  let d = document.getElementById("d")
+
+  d.onmousedown = function (ev) {
+
+    var ev = ev || event;
+
+    let x1 = ev.clientX;
+    let y1 = ev.clientY;
+    let l = d.offsetLeft;
+    let t = d.offsetTop;
+
+    document.onmousemove = function (ev) {
+
+      var ev = ev || event;
+
+      let x2 = ev.clientX;
+      let y2 = ev.clientY;
+      let x = x2 - x1;
+      let y = y2 - y1;
+      let lt = y + t;
+      let ls = x + l;
+
+      if(lt<= 0) {
+        lt = 0
+      } else if (lt >= 200) {
+        lt = 200
+      }
+      if(ls<= 0) {
+        ls = 0
+      } else if (ls >= 200) {
+        ls = 200
+      }
+
+      //更改元素的left，top值
+        d.style.top =  lt + 'px';
+        d.style.left = ls + 'px';
+        d.style.backgroundPosition = `-${ls}px -${lt}px`
+
+    }
+
+    //清除
+    document.onmouseup = function (ev) {
+
+      document.onmousemove = null;
+
+    }
+
+  }
+</script>
+
+</html>
